@@ -29,9 +29,54 @@ window.OptionResolver = function() {
   /**
    * Get defined option keys
    *
-   * @return {array} Defined option keys
+   * @return {Array} Defined option keys
    */
   this.getDefinedOptions = function() {
     return _definedOptions;
+  };
+
+  /**
+   * Define option required keys
+   *
+   * @param {mixed} requiredKeys Single or array required keys
+   * @return {this}
+   */
+  this.setRequired = function(requiredKeys) {
+    if (requiredKeys && requiredKeys.constructor === Array) {
+      _requiredOptions = _requiredOptions.concat(requiredKeys);
+    } else {
+      _requiredOptions.push(requiredKeys);
+    }
+
+    return this;
+  };
+
+  /**
+   * Get required option keys
+   *
+   * @return {Array} Required option keys
+   */
+  this.getRequiredOptions = function() {
+    return _requiredOptions;
+  };
+
+  /**
+   * Check key is required option
+   *
+   * @param  {String}  optionKey Option key
+   * @return {Boolean} Key is required option?
+   */
+  this.isRequired = function(optionKey) {
+    return _requiredOptions.indexOf(optionKey) >= 0 ? true : false;
+  };
+
+  /**
+   * Check required key is still missing from default options
+   *
+   * @param  {String}  optionKey Required option key
+   * @return {Boolean} Required option key is missing?
+   */
+  this.isMissing = function(optionKey) {
+    return !_defaultValues[optionKey];
   };
 };
