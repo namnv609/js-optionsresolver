@@ -1,2 +1,2 @@
-# js-optionsresolver
+# JS OptionsResolver
 JS library like Symfony OptionsResolver
