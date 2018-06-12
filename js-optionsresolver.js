@@ -46,8 +46,10 @@ window.OptionsResolver = function() {
   this.setRequired = function(requiredKeys) {
     if (requiredKeys && requiredKeys.constructor === Array) {
       _requiredOptions = _requiredOptions.concat(requiredKeys);
+      _definedOptions = _definedOptions.concat(requiredKeys);
     } else {
       _requiredOptions.push(requiredKeys);
+      _definedOptions.push(requiredKeys);
     }
 
     return this;
@@ -81,6 +83,23 @@ window.OptionsResolver = function() {
   this.isMissing = function(optionKey) {
     return !_defaultValues[optionKey];
   };
+
+  /**
+   * Get all missing options
+   *
+   * @return {Array} All missing options
+   */
+  this.getMissingOptions = function() {
+    var missingOptions = [];
+
+    _requiredOptions.forEach(function(requiredKey) {
+      if (!_defaultValues[requiredKey]) {
+        missingOptions.push(requiredKey);
+      }
+    });
+
+    return missingOptions;
+  }
 
   /**
    * Set default value for option key
@@ -203,6 +222,7 @@ window.OptionsResolver = function() {
    * @return {Object} The merged and validated options
    */
   this.resolve = function(dataObj) {
+    dataObj = dataObj || {};
     _definedOptions = _arrayUnique(_definedOptions);
     _checkUndefinedOptions(Object.keys(dataObj));
     dataObj = _setOptionsDefault(dataObj);
@@ -384,8 +404,8 @@ window.OptionsResolver = function() {
   /**
    * Remove duplicate values in array
    *
-   * @param  {array} array Array data
-   * @return {array}       Array data without duplicated
+   * @param  {Array} array Array data
+   * @return {Array}       Array data without duplicated
    */
   _arrayUnique = function(array) {
     return array.filter(function(value, index, self) {
