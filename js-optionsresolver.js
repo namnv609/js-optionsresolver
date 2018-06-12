@@ -91,6 +91,7 @@ window.OptionsResolver = function() {
    */
   this.setDefault = function(optionKey, defaultValue) {
     _defaultValues[optionKey] = defaultValue;
+    this.setDefined(optionKey);
 
     return this;
   };
@@ -105,6 +106,7 @@ window.OptionsResolver = function() {
     if (optionDefaultValues && optionDefaultValues.constructor === Object) {
       for (var optionKey in optionDefaultValues) {
         _defaultValues[optionKey] = optionDefaultValues[optionKey];
+        this.setDefined(optionKey);
       }
 
       return this;
@@ -201,6 +203,7 @@ window.OptionsResolver = function() {
    * @return {Object} The merged and validated options
    */
   this.resolve = function(dataObj) {
+    _definedOptions = _arrayUnique(_definedOptions);
     _checkUndefinedOptions(Object.keys(dataObj));
     dataObj = _setOptionsDefault(dataObj);
     _checkMissingRequiredOptions(dataObj);
@@ -376,5 +379,17 @@ window.OptionsResolver = function() {
    */
   _throwInvalidOptionsTypeException = function(key, value, expectedType) {
     throw "InvalidOptionsException: The option \"" + key + "\" with \"" + value + "\" is expected to be of type \"" + expectedType + "\"";
+  };
+
+  /**
+   * Remove duplicate values in array
+   *
+   * @param  {array} array Array data
+   * @return {array}       Array data without duplicated
+   */
+  _arrayUnique = function(array) {
+    return array.filter(function(value, index, self) {
+      return self.indexOf(value) == index;
+    });
   };
 };
