@@ -40,6 +40,16 @@ window.OptionsResolver = function() {
   };
 
   /**
+   * Check an option is defined
+   *
+   * @param  {String}  optionKey Option key
+   * @return {Boolean}           Key are defined?
+   */
+  this.isDefined = function(optionKey) {
+    return (_definedOptions.indexOf(optionKey) !== -1);
+  }
+
+  /**
    * Define option required keys
    *
    * @param {mixed} requiredKeys Single or array required keys
@@ -73,7 +83,7 @@ window.OptionsResolver = function() {
    * @return {Boolean} Key is required option?
    */
   this.isRequired = function(optionKey) {
-    return _requiredOptions.indexOf(optionKey) >= 0 ? true : false;
+    return (_requiredOptions.indexOf(optionKey) !== -1);
   };
 
   /**
