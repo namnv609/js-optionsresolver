@@ -319,16 +319,19 @@ window.OptionsResolver = function() {
       var optionValue = dataObj[key];
       switch(_allowedTypes[key].toLowerCase()) {
         case "int":
+        case "integer":
           if (typeof optionValue !== "number" || !/^\-?\d+$/.test(optionValue)) {
             _throwInvalidOptionsTypeException(key, optionValue, "int");
           }
           break;
         case "string":
+        case "str":
           if (typeof optionValue !== "string") {
             _throwInvalidOptionsTypeException(key, optionValue, "string");
           }
           break;
         case "array":
+        case "arr":
           if (!optionValue || optionValue.constructor !== Array) {
             _throwInvalidOptionsTypeException(key, optionValue, "array");
           }
@@ -345,6 +348,7 @@ window.OptionsResolver = function() {
           }
           break;
         case "object":
+        case "obj":
           if (typeof optionValue !== "object" || optionValue.constructor !== Object) {
             _throwInvalidOptionsTypeException(key, optionValue, "object");
           }
