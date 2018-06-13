@@ -6,8 +6,8 @@
 
 ### Browser setup
 
-* [Download full](https://raw.githubusercontent.com/namnv609/js-optionsresolver/add-documentation/js-optionsresolver.js)
-* [Download minified](https://raw.githubusercontent.com/namnv609/js-optionsresolver/add-documentation/js-optionsresolver.min.js)
+* [Download full](https://raw.githubusercontent.com/namnv609/js-optionsresolver/master/js-optionsresolver.js)
+* [Download minified](https://raw.githubusercontent.com/namnv609/js-optionsresolver/master/js-optionsresolver.min.js)
 
 Just include OptionsResolver in a script tag. Now you can use it.
 
