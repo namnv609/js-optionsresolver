@@ -11,6 +11,8 @@ window.OptionsResolver = function() {
   var _allowedValues = {};
   // Normalizer closures
   var _normalizers = {};
+  // Previous default values
+  var _previousDefaultValues = {};
 
   /**
    * Defined option keys
@@ -109,6 +111,9 @@ window.OptionsResolver = function() {
    * @return {this}
    */
   this.setDefault = function(optionKey, defaultValue) {
+    if (_defaultValues[optionKey]) {
+      _previousDefaultValues[optionKey] = _defaultValues[optionKey];
+    }
     _defaultValues[optionKey] = defaultValue;
     this.setDefined(optionKey);
 
@@ -124,7 +129,7 @@ window.OptionsResolver = function() {
   this.setDefaults = function(optionDefaultValues) {
     if (optionDefaultValues && optionDefaultValues.constructor === Object) {
       for (var optionKey in optionDefaultValues) {
-        _defaultValues[optionKey] = optionDefaultValues[optionKey];
+        this.setDefault(optionKey, optionDefaultValues[optionKey]);
         this.setDefined(optionKey);
       }
 
@@ -283,8 +288,10 @@ window.OptionsResolver = function() {
     Object.keys(_defaultValues).forEach(function(key, idx) {
       if (!dataObj[key]) {
         var defaultValue = _defaultValues[key];
+        var previousDefaultValue = _previousDefaultValues[key];
 
-        dataObj[key] = (defaultValue && defaultValue.constructor === Function) ? defaultValue(dataObj) : defaultValue;
+        dataObj[key] = (defaultValue && defaultValue.constructor === Function) ?
+          defaultValue(dataObj, previousDefaultValue) : defaultValue;
       }
     });
 
