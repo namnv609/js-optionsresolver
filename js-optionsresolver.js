@@ -284,7 +284,7 @@ window.OptionsResolver = function() {
       if (!dataObj[key]) {
         var defaultValue = _defaultValues[key];
 
-        dataObj[key] = (defaultValue.constructor === Function) ? defaultValue(dataObj) : defaultValue;
+        dataObj[key] = (defaultValue && defaultValue.constructor === Function) ? defaultValue(dataObj) : defaultValue;
       }
     });
 
