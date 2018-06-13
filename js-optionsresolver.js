@@ -282,7 +282,9 @@ window.OptionsResolver = function() {
   _setOptionsDefault = function(dataObj) {
     Object.keys(_defaultValues).forEach(function(key, idx) {
       if (!dataObj[key]) {
-        dataObj[key] = _defaultValues[key];
+        var defaultValue = _defaultValues[key];
+
+        dataObj[key] = (defaultValue.constructor === Function) ? defaultValue(dataObj) : defaultValue;
       }
     });
 
